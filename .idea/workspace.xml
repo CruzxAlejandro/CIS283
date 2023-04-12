@@ -4,12 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d157e6a7-8598-48a3-9012-cd8ca4fedc48" name="Changes" comment="New project file for this quarter.">
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/regexsearch/enrollment.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/regexsearch/enrollmentTEST.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/regexsearch/regExSearch.kt" afterDir="false" />
+    <list default="true" id="d157e6a7-8598-48a3-9012-cd8ca4fedc48" name="Changes" comment="Need to write Regex to skip lines until starting point.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/Main.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/regexsearch/regExSearch.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/regexsearch/regExSearch.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,6 +27,19 @@
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">
+    <option name="selectedUrlAndAccountId">
+      <UrlAndAccount>
+        <option name="accountId" value="ee97f52b-6c5d-4467-a75f-30a89ca5b2e0" />
+        <option name="url" value="https://github.com/CruzxAlejandro/CIS283.git" />
+      </UrlAndAccount>
+    </option>
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -63,7 +73,14 @@
       <option name="project" value="LOCAL" />
       <updated>1681187729611</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Need to write Regex to skip lines until starting point.">
+      <created>1681207907943</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1681207907943</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -79,6 +96,17 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="New project file for this quarter." />
-    <option name="LAST_COMMIT_MESSAGE" value="New project file for this quarter." />
+    <MESSAGE value="Need to write Regex to skip lines until starting point." />
+    <option name="LAST_COMMIT_MESSAGE" value="Need to write Regex to skip lines until starting point." />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="java.lang.NullPointerException" package="java.lang" />
+          <option name="timeStamp" value="1" />
+        </breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
