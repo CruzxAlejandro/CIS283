@@ -26,8 +26,8 @@ fun main() {
         if (departmentChoice != "EXIT") {
             print("Enter Class Number: ")
             var classNum = readLine()
-            val pattern = """\A.{10}${departmentChoice}.{1,3}${classNum}.*""".toRegex()
-            val patternTwo = """\A\s{11}.*$""".toRegex()
+            val pattern = """\A.{10}${departmentChoice}\s{1,4}${classNum}.*""".toRegex()
+            val patternTwo = """\A\s{11}\S.*|\A\s{58}\S.*""".toRegex()
             val lines = File(fileName).readLines()
             for (i in 0..(lines.size - 1)) {
                 val classMatch = pattern.find(lines[i])
