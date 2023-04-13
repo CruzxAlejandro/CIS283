@@ -1,7 +1,0 @@
-
-     0516 ABF   243  AN        CJ  ADV UNIBODY   6.0  6.0 ChristensenE 018 0155  F           7:30A  8:30A    20     20     0  8.0
-                                                          ChristensenE 018 0155  MTW         9:30A 10:30A
-                                                          ChristensenE 018 0155  DAILY       8:30A  9:30A
-     2007 CIS   282  AN        HD  PROG PRN I    5.0  5.0 Hybrid Class 001 1116  F          ARR    ARR
-                                                          Jones D      001 1116  MTWTh      10:30A 11:30A    24     15     9  5.0
-     2013 CIS   286  AN        HD  VOICE IP      5.0  5.0 Rantanen E   001 0121  DAILY       9:30A 10:30A    24     14    10  4.7
