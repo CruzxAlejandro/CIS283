@@ -10,47 +10,50 @@ import java.io.File
  ************************************************************/
 
 val fileName = "src/main/kotlin/regexsearch/enrollment.txt"
-/*
-        val pattern = """\A.{10}${departmentChoice}.*${classNum}.*""".toRegex()
-        val patternTwo = """\A\s{11}.*$""".toRegex()
-        print("Enter Class Number: ")
-        var classNum = readLine()
-        val pattern = """\A.{10}${departmentChoice}.{1,3}${classNum}.*""".toRegex()
-        val patternTwo = """\A\s{11}.*$""".toRegex()
- */
+var departmentChoice = ""
+var classNum = ""
+var endProgram = false
 
 fun main() {
-    do {
+    while (!endProgram) {
         print("Enter Department: ")
-        var departmentChoice = readLine()
-        if (departmentChoice != "EXIT") {
+        departmentChoice = readLine()!!
+        if (departmentChoice != "EXIT"){
             print("Enter Class Number: ")
-            var classNum = readLine()
-            val pattern = """\A.{10}${departmentChoice}\s{1,4}${classNum}.*""".toRegex()
-            val patternTwo = """\A\s{11}\S.*|\A\s{58}\S.*""".toRegex()
-            val lines = File(fileName).readLines()
-            for (i in 0..(lines.size - 1)) {
-                val classMatch = pattern.find(lines[i])
-                if (classMatch != null) {
-                    println(classMatch!!.value)
-                    var classInfo = patternTwo.find(lines[i + 1])
-                    if (classInfo != null) {
-                        println(classInfo!!.value)
-                        var counter = 2
-                        var flag = false
-                        while (!flag) {
-                            var nextMatch = patternTwo.find(lines[i + counter])
-                            if (nextMatch != null) {
-                                println(nextMatch!!.value)
-                                counter++
-                            } else {
-                                counter = 2
-                                flag = true
+            classNum = readLine()!!
+            if (classNum != "EXIT") {
+                val pattern = """\A.{10}${departmentChoice}\s{1,4}${classNum}.*""".toRegex()
+                val patternTwo = """\A\s{11}\S.*|\A\s{58}\S.*""".toRegex()
+                val lines = File(fileName).readLines()
+                for (i in 0..(lines.size - 1)) {
+                    val classMatch = pattern.find(lines[i])
+                    if (classMatch != null) {
+                        println(classMatch!!.value)
+                        var classInfo = patternTwo.find(lines[i + 1])
+                        if (classInfo != null) {
+                            println(classInfo!!.value)
+                            var counter = 2
+                            var flag = false
+                            while (!flag) {
+                                var nextMatch = patternTwo.find(lines[i + counter])
+                                if (nextMatch != null) {
+                                    println(nextMatch!!.value)
+                                    counter++
+                                } else {
+                                    counter = 2
+                                    flag = true
+                                }
                             }
                         }
                     }
                 }
             }
+            else{
+                endProgram = true
+            }
         }
-    } while(departmentChoice != "EXIT" )
+        else{
+            endProgram = true
+        }
+    }
 }
