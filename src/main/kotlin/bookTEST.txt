@@ -3,3 +3,19 @@ Kotlin Programming: The Big Nerd Ranch Guide	Josh Skeen	2018	384	0135161630
 Kotlin In-Depth [Vol-I]: A Comprehensive Guide to Modern Multi-Paradigm Language	Aleksei Sedunov	2020	338	9389328586
 Kotlin in Action	Dmitry Jemerov	2017	360	1617293296
 Learning React Native: Building Native Mobile Apps with JavaScript	Bonnie Eisenman	2017	242	1491989149
+
+
+
+
+ Double Validation?? Null && 0
+
+ var pages = readln()
+        do {
+                print("Please enter the number of pages: ")
+                pages = readln()
+        }while (pages.isEmpty())
+
+        if(pages.toInt() <=  0 ) {
+                print("Please enter the number of pages: ")
+                pages = readln()
+        }
