@@ -1,4 +1,8 @@
+Assimilating RubyMine	Dave Jones	2013	66	1849698767
 Kotlin Programming: The Big Nerd Ranch Guide	Josh Skeen	2018	384	0135161630
-Kotlin for Noobs	Jason Timpf	2007	990	9920094772
+Kotlin In-Depth [Vol-I]: A Comprehensive Guide to Modern Multi-Paradigm Language	Aleksei Sedunov	2020	338	9389328586
 Kotlin in Action	Dmitry Jemerov	2017	360	1617293296
 Learning React Native: Building Native Mobile Apps with JavaScript	Bonnie Eisenman	2017	242	1491989149
+Flying Alaska	Aaron Laine	2020	10	2098347589
+How to play false 9	Derrick Chaven	2008	50	9823579338
+How to train your dragon	Lisa Walker	2016	300	9238476182

@@ -42,7 +42,9 @@ while (userChoice != 10 ) {
         4 -> removeBook(libraryList)
         5 -> mostPages(libraryList)
         6 -> leastPages(libraryList)
-        7 -> pagesGreaterThan(libraryList, 0..200)
+        7 -> pagesGreaterThan(libraryList)
+        8 -> pagesLessThan(libraryList, 0..200)
+        9 -> pagesBetween(libraryList, 50..300)
         10 -> println("Thanks! Saving books and closing program.")
         else -> println("Please submit a valid option. (1-10)")
 
@@ -230,21 +232,42 @@ fun leastPages(books: MutableList<BookLibrary>){
                 println(books[leastPages].title.slice(0..29).padEnd(30) + " " + books[leastPages].author.padEnd(15) + " " + books[leastPages].publishYear.toString().padStart(6) + " " + books[leastPages].numPages.toString().padStart(5) + " " + books[leastPages].isbn.padEnd(13) + " " + "https://www.biblio.com/${books[leastPages].isbn}")
         }
 }
-fun pagesGreaterThan(books: MutableList<BookLibrary>, rangeOfPages : IntRange){
-
+fun pagesGreaterThan(books: MutableList<BookLibrary>){
+        header()
+        for(i in books){
+                if (i.numPages >= 200){
+                        if (i.title.length <= 30 ){
+                                println(i.title.padEnd(30) + " " + i.author.padEnd(15) + " " + i.publishYear.toString().padStart(6) + " " + i.numPages.toString().padStart(5) + " " + i.isbn.padEnd(13) + " " + "https://www.biblio.com/${i.isbn}")
+                        }
+                        else {
+                                println(i.title.slice(0..29).padEnd(30) + " " + i.author.padEnd(15) + " " + i.publishYear.toString().padStart(6) + " " + i.numPages.toString().padStart(5) + " " + i.isbn.padEnd(13) + " " + "https://www.biblio.com/${i.isbn}")
+                        }
+                }
+        }
 }
-/*
-
-1.      View all Books
-2.      Add book
-3.      Update book
-4.      Delete book
-5.      View book with most pages
-6.      View book with least pages
-7.      View books with pages greater than or equal to 200
-8.      View books with pages less than 200
-9.      View books with pages between 50-300 inclusive
-10.     Exit   (be sure to save file back out)
-
-
- */
+fun pagesLessThan(books: MutableList<BookLibrary>, pagesWithin: IntRange) {
+        header()
+        for(i in books){
+                if (i.numPages in pagesWithin){
+                        if (i.title.length <= 30 ){
+                                println(i.title.padEnd(30) + " " + i.author.padEnd(15) + " " + i.publishYear.toString().padStart(6) + " " + i.numPages.toString().padStart(5) + " " + i.isbn.padEnd(13) + " " + "https://www.biblio.com/${i.isbn}")
+                        }
+                        else {
+                                println(i.title.slice(0..29).padEnd(30) + " " + i.author.padEnd(15) + " " + i.publishYear.toString().padStart(6) + " " + i.numPages.toString().padStart(5) + " " + i.isbn.padEnd(13) + " " + "https://www.biblio.com/${i.isbn}")
+                        }
+                }
+        }
+}
+fun pagesBetween(books: MutableList<BookLibrary>, betweenThis: IntRange){
+        header()
+        for(i in books){
+                if (i.numPages in betweenThis){
+                        if (i.title.length <= 30 ){
+                                println(i.title.padEnd(30) + " " + i.author.padEnd(15) + " " + i.publishYear.toString().padStart(6) + " " + i.numPages.toString().padStart(5) + " " + i.isbn.padEnd(13) + " " + "https://www.biblio.com/${i.isbn}")
+                        }
+                        else {
+                                println(i.title.slice(0..29).padEnd(30) + " " + i.author.padEnd(15) + " " + i.publishYear.toString().padStart(6) + " " + i.numPages.toString().padStart(5) + " " + i.isbn.padEnd(13) + " " + "https://www.biblio.com/${i.isbn}")
+                        }
+                }
+        }
+}
