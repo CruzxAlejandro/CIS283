@@ -5,6 +5,8 @@ Kotlin in Action	Dmitry Jemerov	2017	360	1617293296
 Learning React Native: Building Native Mobile Apps with JavaScript	Bonnie Eisenman	2017	242	1491989149
 
 
+Question for Dave - How do we handle validation for Ints?
+Remove book currently does not have validation for empty return
 
 
  Double Validation?? Null && 0
