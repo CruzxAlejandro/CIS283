@@ -1,5 +1,3 @@
-import regexsearch.fileName
-import weatherdbalexc.printHeader
 import java.awt.print.Book
 import java.io.File
 import java.io.PipedReader
@@ -15,7 +13,8 @@ import java.io.PipedReader
 var bookFile = "src/main/kotlin/books.txt"
 class BookLibrary(var title : String , var author: String, var publishYear: Int, var numPages: Int, var isbn: String) {
         override fun toString(): String {
-                return "${title}\t${author}\t${publishYear}\t${numPages}\t${isbn}"
+
+                return ("${title}\t${author}\t${publishYear}\t${numPages}\t${isbn}")
         }
 }
 
@@ -47,13 +46,18 @@ while (userChoice != 10 ) {
         9 -> pagesBetween(libraryList, 50..300)
         10 -> println("Thanks! Saving books and closing program.")
         else -> println("Please submit a valid option. (1-10)")
-
         }
 }
 val writeFile = File(bookFile).printWriter()
-for (i in libraryList) {
+//for (i in libraryList) {
+//        writeFile.println(i)
+//}
+
+for(i in libraryList){
         writeFile.println(i)
 }
+
+
 writeFile.close()
 
 }
