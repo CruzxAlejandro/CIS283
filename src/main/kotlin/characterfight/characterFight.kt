@@ -137,13 +137,12 @@ fun characterLoad(fileOne: String) : Character {
     return player
 }
 
-
-var dice4 = Dice(4)
-var dice8 = Dice(8)
-var dice15 = Dice(15)
-var dice10 = Dice(10)
-
 fun main() {
+    var dice4 = Dice(4)
+    var dice8 = Dice(8)
+    var dice15 = Dice(15)
+    var dice10 = Dice(10)
+
     val menu = Menu(arrayOf("Load Character 1", "Load Character 2", "Fight", "Quit"), "Please make a selection: ")
     var fighterOneFile = ""
     var fighterTwoFile = ""
@@ -166,6 +165,9 @@ fun main() {
                 // creating Characters for Legolas and Gimli
                 var fighterOne = characterLoad(fighterOneFile)
                 var fighterTwo = characterLoad(fighterTwoFile)
+                // players alive
+                var fighterOneAlive = true
+                var fighterTwoAlive = true
                 // Who goes first
                 var fighterOneAgileDice = Dice(fighterOne.agility)
                 var fighterTwoAgileDice = Dice(fighterTwo.agility)
@@ -182,18 +184,85 @@ fun main() {
                 else {
                     gimliFirst = true
                 }
+                // Legolas goes first
+                if (legolasFirst) {
+                    var pattern = """\r""".toRegex()
+                    do {
+                        var legolasHit = dice10.roll()
+                        if (legolasHit < fighterOne.agility ) {
+                            fighterOne.currentHit = (fighterOne.strength * (1.0/dice4.roll()) + (fighterOne.weapon.damageHits)/(dice8.roll())).toInt()
+                            var armorSave = (fighterTwo.armor.protectionHits / dice15.roll()).toInt()
+                            var damageDone = (fighterOne.currentHit - armorSave)
+                            if (damageDone <= 0 ) {
+                                damageDone = 0
+                            }
+                            var finalHealth = fighterOne.hitPoints - damageDone
+                            if(finalHealth <= 0) {
+                                finalHealth = 0
+                            }
+                            println("${fighterOne.name} fights with the ${fighterOne.weapon.name}:")
+                            println(" ".repeat(12) + "Hit:" + "${fighterOne.currentHit}".padStart(3) + " ".repeat(4) + "${fighterTwo.name}'s armor saved ${armorSave} points" )
+                            println("${fighterTwo.name}s hits are reduced by ${damageDone} points.")
+                            println("${fighterTwo.name} has ${finalHealth} out of ${fighterTwo.hitPoints}.")
 
-                fighterOne.currentHit = (fighterOne.strength * (1.0/dice4.roll()) + (fighterOne.weapon.damageHits)/(dice8.roll())).toInt()
-                println(fighterOne.currentHit)
+                            if (finalHealth <= 0) {
+                                fighterTwoAlive = false
+                            }
+
+                        } else {
+                            println("Legolas misses!")
+                        }
+//                        var gimliHit = dice10.roll()
+//                        if (gimliHit < fighterTwo.agility) {
+//                            fighterTwo.currentHit = (fighterTwo.strength * (1.0/dice4.roll()) + (fighterTwo.weapon.damageHits)/(dice8.roll())).toInt()
+//                            var armorSave = (fighterOne.armor.protectionHits / dice15.roll()).toInt()
+//                            var damageDone = (fighterTwo.currentHit - armorSave)
+//                            if (damageDone <= 0) {
+//                                damageDone = 0
+//                            }
+//                            var finalHealth = fighterOne.hitPoints - damageDone
+//                            if(finalHealth <= 0) {
+//                                finalHealth = 0
+//                            }
+//                            println("${fighterTwo.name} fights with the ${fighterTwo.weapon.name}:")
+//                            println(" ".repeat(12) + "Hit:" + "${fighterTwo.currentHit}".padStart(3) + " ".repeat(4) + "${fighterOne.name}'s armor saved ${armorSave} points" )
+//                            println("${fighterOne.name}s hits are reduced by ${damageDone} points.")
+//                            println("${fighterOne.name} has ${finalHealth} out of ${fighterOne.hitPoints}.")
+//                            fighterOne.hitPoints = finalHealth
+//                            if (fighterOne.hitPoints <= 0) {
+//                                fighterOneAlive = false
+//                            }
+//                        } else {
+//                            println("Gimli misses!")
+//                        }
+                        println("Hit return to continue...")
+                        var nextRound = readLine().toString();
+                    }while (fighterOneAlive && fighterTwoAlive && !nextRound.matches(pattern))
+                }
 
             }
         }
     }while (choice != 4)
 }
-
-////    hit = (strength * (1.0/roll4) + (weapon hits)/roll8) (as an integer)
-
 /*
+
+
+Loop fighting until one character has lost all of their hit points (DIES)
+For each fighter
+First roll an AGILE sided die for each fighter to determine which fighter goes first. The fighter with the highest score will go first.
+Roll a 10-sided die to determine if the fighter hits or misses
+The equation would be: roll10 < agility is a hit otherwise a miss.
+A hits damage is determined by the character's strength and weapon's power with this formula:
+hit = (strength * (1.0/roll4) + (weapon hits)/roll8) (as an integer)
+This is then reduced by an armor save from the formula:
+armor_save = (opponent's armor hits / roll15 ) (as an integer)
+Reduce the opponent's current_hits by the (hit – armor_save) amount (Don't reduce by negative numbers)
+End fighting loop (now do the opponent)
+PAUSE after each round and print both fighter’s statistics
+Print out the winner and both fighter's statistics
+
+
+
 Dave, elf, 47, 30, 10      #Name, race, hits, strength, agility turn into a Character Object
 Bow, 15                    #name, hits   turn into a Weapon Object
 Leather, 10                #name, hits   turn into an Armor Object
@@ -215,4 +284,6 @@ Character Class
     Weapon,   (object from the Weapon Class)
 
     Armor  (object from the Armor Class)
+
+
  */
