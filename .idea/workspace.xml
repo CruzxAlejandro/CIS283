@@ -5,7 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d157e6a7-8598-48a3-9012-cd8ca4fedc48" name="Changes" comment="Push to master branch.">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/characterfight/characterFight.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/characterfight/characterFight.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
