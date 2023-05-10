@@ -15,16 +15,41 @@ fun promptForInt(message:String, range: IntRange = Int.MIN_VALUE..Int.MAX_VALUE)
     var input: String? = ""
     do {
         if(!firstTime) {
-            println("Invalid Number - Must be a whole number between ${range.first} and ${range.last}")
-            firstTime = false
+            println("""|${" "}
+                               |ERROR
+                               |${"-".repeat(50)}
+                               |Invalid Number - Please enter a whole number between ${range.first} and ${range.last}
+                               |${"-".repeat(50)}
+                               |${" "}
+                                """.trimMargin())
         }
         print(message)
         input = readLine()
-    } while (input.isNullOrEmpty() || ! isInt.matches(input) || input.toInt() !in range)
+        firstTime = false
+    } while (input.isNullOrEmpty() || !isInt.matches(input) || input.toInt() !in range)
     return input.toInt()
 }
-
+fun promptForString(message: String) : String {
+    var input : String? = ""
+    var firstTime = true
+    do {
+        if (!firstTime) {
+            println("""|${" "}
+                               |ERROR
+                               |${"-".repeat(50)}
+                               |Please enter a valid file name.
+                               |${"-".repeat(50)}
+                               |${" "}
+                                """.trimMargin())
+        }
+        print(message)
+        input = readLine()
+        firstTime = false
+    }while (input.isNullOrEmpty())
+    return input
+}
 class Menu(var menuItems: Array<String>, var prompt : String) {
+    var quit = menuItems.size
     fun displayMenu() : Int {
         for ( (index, item) in menuItems.withIndex()) {
             println("${(index + 1)}. ${item}")
@@ -32,13 +57,11 @@ class Menu(var menuItems: Array<String>, var prompt : String) {
         return promptForInt(prompt, 1..menuItems.size )
     }
 }
-
 class Dice(private var numSides : Int) {
     fun roll() : Int {
         return (1..numSides).random()
     }
 }
-
 class Character(var name:String, var race:String, var hitPoints:Int, var currentHit: Int, var strength: Int, var agility:Int, var weapon: Weapon, var armor: Armor) {
 val maxFifty = 50
 val maxHundred = 100
@@ -62,6 +85,21 @@ init {
     if (agility <= minOne) {
         agility = 1
     }
+    if (currentHit <= 0) {
+        currentHit = 0
+    }
+}
+fun reviveCharater(healthBack: Int) {
+    currentHit = healthBack
+}
+
+fun reduceHits(roundHit: Int, armorSave: Int) : Int {
+
+    var damageDone = roundHit - armorSave
+    if (damageDone <= 0 ) {
+        damageDone = 0
+    }
+    return damageDone
 }
 
 override fun toString():String {
@@ -75,7 +113,6 @@ override fun toString():String {
         """.trimMargin()
     }
 }
-
 open class Item(var name:String){
     override fun toString():String {
         return """
@@ -83,7 +120,6 @@ open class Item(var name:String){
         """.trimMargin()
     }
 }
-
 class Weapon(name:String, var damageHits:Int): Item(name){
     override fun toString():String {
     return super.toString() +
@@ -93,7 +129,6 @@ class Weapon(name:String, var damageHits:Int): Item(name){
             """.trimMargin()
     }
 }
-
 class Armor(name: String, var protectionHits:Int): Item(name){
     override fun toString():String {
         return super.toString() +
@@ -103,9 +138,8 @@ class Armor(name: String, var protectionHits:Int): Item(name){
             """.trimMargin()
     }
 }
-
-fun characterLoad(fileOne: String) : Character {
-    var fighterOneFile = "src/main/kotlin/characterfight/${fileOne}"
+fun characterLoad(file: String) : Character {
+    var fighterOneFile = "src/main/kotlin/characterfight/${file}"
     var ListOne = arrayListOf<String>()
     var ListTwo = arrayListOf<String>()
     var ListThree = arrayListOf<String>()
@@ -144,6 +178,9 @@ fun main() {
     var pattern = """\r""".toRegex()
     var nextRound = ""
 
+    lateinit var fighterOne : Character
+    lateinit var fighterTwo: Character
+
     val menu = Menu(arrayOf("Load Character 1", "Load Character 2", "Fight", "Quit"), "Please make a selection: ")
     var fighterOneFile = ""
     var fighterTwoFile = ""
@@ -151,174 +188,181 @@ fun main() {
         var choice = menu.displayMenu()
         when(choice) {
             1 -> {
-                print("Enter the name of a character file: ")
-                fighterOneFile = readLine().toString()
-                var fighterOne = characterLoad(fighterOneFile)
+//                print("Enter the name of a character file: ")
+//                fighterOneFile = readLine().toString()
+                fighterOneFile = promptForString("Enter the name of a character file: ")
+                fighterOne = characterLoad(fighterOneFile)
                 menu.menuItems[0] = "${fighterOne.name} has been loaded."
             }
             2 -> {
-                print("Enter the name of a character file: ")
-                fighterTwoFile = readLine().toString()
-                var fighterTwo = characterLoad(fighterTwoFile)
+//                print("Enter the name of a character file: ")
+//                fighterTwoFile = readLine().toString()
+                fighterTwoFile = promptForString("Enter the name of a character file: ")
+                fighterTwo = characterLoad(fighterTwoFile)
                 menu.menuItems[1] = "${fighterTwo.name} has been loaded."
             }
             3 -> {
-                // creating Characters for Legolas and Gimli
-                var fighterOne = characterLoad(fighterOneFile)
-                var fighterTwo = characterLoad(fighterTwoFile)
-                // players alive
-                var fighterOneAlive = true
-                var fighterTwoAlive = true
-                // Who goes first
-                var fighterOneAgileDice = Dice(fighterOne.agility)
-                var fighterTwoAgileDice = Dice(fighterTwo.agility)
-                var rollOne = fighterOneAgileDice.roll()
-                var rollTwo = fighterTwoAgileDice.roll()
-                var legolasFirst = false
-                var gimliFirst = false
-                if (rollOne > rollTwo) {
-                    legolasFirst = true
-                }
-                else if (rollOne == rollTwo) {
-                    legolasFirst = true
-                }
-                else {
-                    gimliFirst = true
-                }
-                // Legolas goes first
-                if (legolasFirst) {
+                if (!fighterOneFile.isNullOrEmpty() && !fighterTwoFile.isNullOrEmpty()) {
+    //                var fighterOne = characterLoad(fighterOneFile)
+    //                var fighterTwo = characterLoad(fighterTwoFile)
+                    // players alive
+                    fighterOne.reviveCharater(fighterOne.hitPoints)
+                    fighterTwo.reviveCharater(fighterTwo.hitPoints)
+                    var fighterOneAlive = true
+                    var fighterTwoAlive = true
+                    var fighterOneAgileDice = Dice(fighterOne.agility)
+                    var fighterTwoAgileDice = Dice(fighterTwo.agility)
+                    var round = 1
                     do {
-                        var legolasHit = dice10.roll()
-                        if (legolasHit < fighterOne.agility) {
-                            var roundHit = (fighterOne.strength * (1.0/dice4.roll()) + (fighterOne.weapon.damageHits)/(dice8.roll())).toInt()
-                            var armorSave = (fighterTwo.armor.protectionHits / dice15.roll()).toInt()
-                            var damageDone = (roundHit - armorSave)
-                            if (damageDone <= 0 ) {
-                                damageDone = 0
-                            }
-                            fighterTwo.currentHit = fighterTwo.currentHit - damageDone
-                            if (fighterTwo.currentHit <= 0) {
-                                fighterTwo.currentHit = 0
-                                fighterTwoAlive = false
-                            }
-                            println("${fighterOne.name} fights with the ${fighterOne.weapon.name}:")
-                            println(" ".repeat(12) + "Hit:" + "${roundHit}".padStart(3) + " ".repeat(4) + "${fighterTwo.name}'s armor saved ${armorSave} points" )
-                            println("${fighterTwo.name}s hits are reduced by ${damageDone} points.")
-                            println("${fighterTwo.name} has ${fighterTwo.currentHit} out of ${fighterTwo.hitPoints}.")
-
-                            if (fighterTwo.currentHit <= 0) {
-                                fighterTwoAlive = false
-                            }
-                        } else {
-                            println("Legolas misses!")
+                        var rollOne = fighterOneAgileDice.roll()
+                        var rollTwo = fighterTwoAgileDice.roll()
+                        var legolasFirst = false
+                        var gimliFirst = false
+                        if (rollOne > rollTwo) {
+                            legolasFirst = true
                         }
-                        var gimliHit = dice10.roll()
-                        if (gimliHit < fighterTwo.agility && fighterTwoAlive) {
-//                            fighterTwo.currentHit = (fighterTwo.strength * (1.0/dice4.roll()) + (fighterTwo.weapon.damageHits)/(dice8.roll())).toInt()
-                            var roundHit = (fighterTwo.strength * (1.0/dice4.roll()) + (fighterTwo.weapon.damageHits)/(dice8.roll())).toInt()
-                            var armorSave = (fighterOne.armor.protectionHits / dice15.roll()).toInt()
-                            var damageDone = (roundHit - armorSave)
-                            if (damageDone <= 0) {
-                                damageDone = 0
-                            }
-                            fighterOne.currentHit = fighterOne.currentHit - damageDone
-                            if (fighterOne.currentHit <= 0) {
-                                fighterOne.currentHit = 0
-                                fighterOneAlive = false
-                            }
-                            println("${fighterTwo.name} fights with the ${fighterTwo.weapon.name}:")
-                            println(" ".repeat(12) + "Hit:" + "${roundHit}".padStart(3) + " ".repeat(4) + "${fighterOne.name}'s armor saved ${armorSave} points" )
-                            println("${fighterOne.name}s hits are reduced by ${damageDone} points.")
-                            println("${fighterOne.name} has ${fighterOne.currentHit} out of ${fighterOne.hitPoints}.")
+                        else if (rollOne == rollTwo) {
+                            legolasFirst = true
+                        }
+                        else {
+                            gimliFirst = true
+                        }
+                        // Legolas goes first
+//                        println("-".repeat(25) + "Round" + "${round}".padStart(3) + "-".repeat(25))
+                        println("""
+                                    |${" "}
+                                    |${"-".repeat(25)} ROUND ${"${round}".padStart(2)} ${"-".repeat(25)}
+                                    """.trimMargin())
+                        if (legolasFirst) {
+                                var legolasHit = dice10.roll()
+                                if (legolasHit < fighterOne.agility) {
+                                    var roundHit = (fighterOne.strength * (1.0/dice4.roll()) + (fighterOne.weapon.damageHits)/(dice8.roll())).toInt()
+                                    var armorSave = (fighterTwo.armor.protectionHits / dice15.roll()).toInt()
+                                    if (fighterTwo.currentHit <= 0) {
+                                        fighterTwo.currentHit = 0
+                                        fighterTwoAlive = false
+                                    }
+                                    fighterTwo.currentHit = fighterTwo.currentHit - fighterTwo.reduceHits(roundHit, armorSave)
+                                    if (fighterTwo.currentHit <= 0) {
+                                        fighterTwo.currentHit = 0
+                                        fighterTwoAlive = false
+                                    }
+                                    println("${fighterOne.name} fights with the ${fighterOne.weapon.name}:")
+                                    println(" ".repeat(12) + "Hit:" + "${roundHit}".padStart(3) + " ".repeat(4) + "${fighterTwo.name}'s armor saved ${armorSave} points" )
+                                    println("${fighterTwo.name}s hits are reduced by ${fighterTwo.reduceHits(roundHit,armorSave)} points.")
+                                    println("${fighterTwo.name} has ${fighterTwo.currentHit} out of ${fighterTwo.hitPoints}.")
 
-                            if (fighterOne.currentHit <= 0) {
-                                fighterOneAlive = false
+
+                                } else {
+                                    println("${fighterOne.name} misses!")
+                                }
+                                var gimliHit = dice10.roll()
+                                if (gimliHit < fighterTwo.agility && fighterTwoAlive) {
+                                    var roundHit = (fighterTwo.strength * (1.0/dice4.roll()) + (fighterTwo.weapon.damageHits)/(dice8.roll())).toInt()
+                                    var armorSave = (fighterOne.armor.protectionHits / dice15.roll()).toInt()
+                                    fighterOne.currentHit = fighterOne.currentHit - fighterOne.reduceHits(roundHit, armorSave)
+                                    if (fighterOne.currentHit <= 0) {
+                                        fighterOne.currentHit = 0
+                                        fighterOneAlive = false
+                                    }
+                                    println("${fighterTwo.name} fights with the ${fighterTwo.weapon.name}:")
+                                    println(" ".repeat(12) + "Hit:" + "${roundHit}".padStart(3) + " ".repeat(4) + "${fighterOne.name}'s armor saved ${armorSave} points" )
+                                    println("${fighterOne.name}s hits are reduced by ${fighterOne.reduceHits(roundHit,armorSave)} points.")
+                                    println("${fighterOne.name} has ${fighterOne.currentHit} out of ${fighterOne.hitPoints}.")
+
+                                } else {
+                                    if (fighterTwoAlive) {
+                                        println("${fighterTwo.name} misses!")
+                                    }
+                                }
+                        }
+                        if (gimliFirst) {
+                            var gimliHit = dice10.roll()
+                            if (gimliHit < fighterTwo.agility && fighterTwoAlive) {
+                                var roundHit = (fighterTwo.strength * (1.0/dice4.roll()) + (fighterTwo.weapon.damageHits)/(dice8.roll())).toInt()
+                                var armorSave = (fighterOne.armor.protectionHits / dice15.roll()).toInt()
+                                fighterOne.currentHit = fighterOne.currentHit - fighterOne.reduceHits(roundHit, armorSave)
+                                if (fighterOne.currentHit <= 0) {
+                                    fighterOne.currentHit = 0
+                                    fighterOneAlive = false
+                                }
+                                println("${fighterTwo.name} fights with the ${fighterTwo.weapon.name}:")
+                                println(" ".repeat(12) + "Hit:" + "${roundHit}".padStart(3) + " ".repeat(4) + "${fighterOne.name}'s armor saved ${armorSave} points" )
+                                println("${fighterOne.name}s hits are reduced by ${fighterOne.reduceHits(roundHit,armorSave)} points.")
+                                println("${fighterOne.name} has ${fighterOne.currentHit} out of ${fighterOne.hitPoints}.")
+
+                            } else {
+                                if (fighterTwoAlive) {
+                                    println("${fighterTwo.name} misses!")
+                                }
                             }
-                        } else {
-                            if (fighterTwoAlive) {
-                                println("Gimli misses!")
+                            var legolasHit = dice10.roll()
+                            if (legolasHit < fighterOne.agility) {
+                                var roundHit = (fighterOne.strength * (1.0/dice4.roll()) + (fighterOne.weapon.damageHits)/(dice8.roll())).toInt()
+                                var armorSave = (fighterTwo.armor.protectionHits / dice15.roll()).toInt()
+                                if (fighterTwo.currentHit <= 0) {
+                                    fighterTwo.currentHit = 0
+                                    fighterTwoAlive = false
+                                }
+                                fighterTwo.currentHit = fighterTwo.currentHit - fighterTwo.reduceHits(roundHit, armorSave)
+                                if (fighterTwo.currentHit <= 0) {
+                                    fighterTwo.currentHit = 0
+                                    fighterTwoAlive = false
+                                }
+                                println("${fighterOne.name} fights with the ${fighterOne.weapon.name}:")
+                                println(" ".repeat(12) + "Hit:" + "${roundHit}".padStart(3) + " ".repeat(4) + "${fighterTwo.name}'s armor saved ${armorSave} points" )
+                                println("${fighterTwo.name}s hits are reduced by ${fighterTwo.reduceHits(roundHit,armorSave)} points.")
+                                println("${fighterTwo.name} has ${fighterTwo.currentHit} out of ${fighterTwo.hitPoints}.")
+
+
+                            } else {
+                                if (fighterOneAlive) {
+                                    println("${fighterOne.name} misses!")
+                                }
                             }
                         }
                         if (fighterOneAlive && fighterTwoAlive) {
-                        println("Hit return to continue...")
-                        nextRound = readLine().toString();
+                            println("""
+                               |Hit return to continue ...
+                               |${"-".repeat(60)}
+                                """.trimMargin())
+                            nextRound = readLine().toString();
                         }
+                        round += 1
                     }while (fighterOneAlive && fighterTwoAlive && !nextRound.matches(pattern))
                     if (!fighterOneAlive) {
                         println("""
-                            |${" "}
-                            |${fighterTwo.name} WINS!
-                            |${"-".repeat(25)}
-                            |${fighterOne.name} has ${fighterOne.currentHit} out of ${fighterOne.hitPoints}
-                            |${fighterTwo.name} has ${fighterTwo.currentHit} out of ${fighterTwo.hitPoints}
-                            |${"-".repeat(25)}
-                        """.trimMargin())
-                        choice = 4;
+                                    |${"-".repeat(60)}
+                                    |${" "}
+                                    |${fighterTwo.name} WINS!
+                                    |${"-".repeat(60)}
+                                    |${fighterOne.name} has ${fighterOne.currentHit} out of ${fighterOne.hitPoints}
+                                    |${fighterTwo.name} has ${fighterTwo.currentHit} out of ${fighterTwo.hitPoints}
+                                    |${"-".repeat(60)}
+                                """.trimMargin())
                     }
                     if (!fighterTwoAlive) {
                         println("""
-                            |${" "}
-                            |${fighterOne.name} WINS!
-                            |${"-".repeat(25)}                            
-                            |${fighterTwo.name} has ${fighterTwo.currentHit} out of ${fighterTwo.hitPoints}
-                            |${fighterOne.name} has ${fighterOne.currentHit} out of ${fighterOne.hitPoints}
-                            |${"-".repeat(25)}
-                        """.trimMargin())
-                        choice = 4;
+                                    |${"-".repeat(60)}
+                                    |${" "}
+                                    |${fighterOne.name} WINS!
+                                    |${"-".repeat(60)}                            
+                                    |${fighterTwo.name} has ${fighterTwo.currentHit} out of ${fighterTwo.hitPoints}
+                                    |${fighterOne.name} has ${fighterOne.currentHit} out of ${fighterOne.hitPoints}
+                                    |${"-".repeat(60)}
+                                """.trimMargin())
                     }
                 }
-
+                else {
+                    println("""|${" "}
+                               |ERROR
+                               |${"-".repeat(50)}
+                               |Please make sure two character files are loaded...
+                               |${"-".repeat(50)}
+                               |${" "}
+                                """.trimMargin())
+                }
             }
         }
-    }while (choice != 4)
+    }while (choice != menu.quit)
 }
-/*
-
-Gimli WINS!
--------------------------
-Legolas greenleaf has 0 left out of 47.
-Gimli has 2 left out of 90.
--------------------------
-
-
-
-Loop fighting until one character has lost all of their hit points (DIES)
-For each fighter
-First roll an AGILE sided die for each fighter to determine which fighter goes first. The fighter with the highest score will go first.
-Roll a 10-sided die to determine if the fighter hits or misses
-The equation would be: roll10 < agility is a hit otherwise a miss.
-A hits damage is determined by the character's strength and weapon's power with this formula:
-hit = (strength * (1.0/roll4) + (weapon hits)/roll8) (as an integer)
-This is then reduced by an armor save from the formula:
-armor_save = (opponent's armor hits / roll15 ) (as an integer)
-Reduce the opponent's current_hits by the (hit – armor_save) amount (Don't reduce by negative numbers)
-End fighting loop (now do the opponent)
-PAUSE after each round and print both fighter’s statistics
-Print out the winner and both fighter's statistics
-
-
-
-Dave, elf, 47, 30, 10      #Name, race, hits, strength, agility turn into a Character Object
-Bow, 15                    #name, hits   turn into a Weapon Object
-Leather, 10                #name, hits   turn into an Armor Object
-
-Character Class
-
-    Maximum values should be private val variables and should  be checked on input so they cannot be used for cheating
-
-    Name, Race,
-
-    Hit Points (Min 1, Max 100),
-
-    Current hit points (calculated)
-
-    Strength (Min 1, Max 50),
-
-    Agility (Min 1, Max 10),
-
-    Weapon,   (object from the Weapon Class)
-
-    Armor  (object from the Armor Class)
-
-
- */
