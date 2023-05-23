@@ -61,7 +61,7 @@ open class Inventory(fileName : String) {
 
     fun toHeaderString() : String {
         var retString = ""
-        retString += "Parts Inventory".padStart(75) + "\n"
+        retString += " ".repeat(75) + "Parts Inventory\n"
         retString += "${header[0].toString().replace("Part","Alexs").padEnd(colOne)}${header[1].toString().padEnd(colTwo)}${header[2].toString().padEnd(colThree)}${header[3].toString().padEnd(colFour)}${header[4].toString().padEnd(colFive)}${header[5].toString().padEnd(colSix)}${header[6].toString().padEnd(colSeven)}${header[7].toString().padEnd(colEight)}${header[8].toString().padEnd(colNine)}${header[9].toString().padEnd(colTen)}\n"
         retString += "${"-".repeat(colOne - 1)} ${"-".repeat(colTwo - 1)} ${"-".repeat(colThree - 1)} ${"-".repeat(colFour - 1)} ${"-".repeat(colFive - 1)} ${"-".repeat(colSix - 1)} ${"-".repeat(colSeven - 1)} ${"-".repeat(colEight - 1)} ${"-".repeat(colNine - 1)} ${"-".repeat(colTen - 1)}\n"
         return retString
@@ -109,6 +109,16 @@ open class Inventory(fileName : String) {
             writeFile.print(i.toTab())
         }
         writeFile.close()
+    }
+
+    fun specificCategory(choice : String) : String {
+        var retString = ""
+        for (i in fullInventoryList) {
+            if (i.category == choice.uppercase()) {
+                retString += i.toTableString()
+            }
+        }
+        return retString
     }
 
     fun detailedReport(choice : Int) : String {
@@ -171,5 +181,6 @@ open class Inventory(fileName : String) {
             )
         }
     }
+
 }
 

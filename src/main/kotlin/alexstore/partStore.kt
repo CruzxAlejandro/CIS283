@@ -84,8 +84,9 @@ fun main() {
         var choice = menu.displayMenu()
         when(choice) {
             1 -> listAllParts(storeInventory)
-            2 -> showDetailedInfo(storeInventory)
+            2 -> showAllCategory(storeInventory)
             6 -> addPartInventory(storeInventory)
+            8 -> showDetailedInfo(storeInventory)
         }
     }while (choice != menu.quit)
 }
@@ -95,6 +96,13 @@ fun listAllParts(storeInventory: Inventory){
     print(storeInventory.toHeaderString())
     print( storeInventory.toTableString())
     println()
+}
+fun showAllCategory(storeInventory: Inventory){
+    print("Select a category to filter part inventory: ")
+    val category = readln()
+    println()
+    print(storeInventory.toHeaderString())
+    println(storeInventory.specificCategory(category))
 }
 fun showDetailedInfo(storeInventory: Inventory) {
     println()
