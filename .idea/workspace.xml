@@ -5,17 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d157e6a7-8598-48a3-9012-cd8ca4fedc48" name="Changes" comment="Push to master branch.">
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/alexstore/Computer.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/alexstore/Inventory.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/alexstore/Part.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/alexstore/Printer.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/alexstore/Tablet.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/alexstore/partStore.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/alexstore/parts_database.db" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/alexstore/testingFile.tsv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/csv-editor.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/csv-editor.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/characterfight/characterFight.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/characterfight/characterFight.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/alexstore/Inventory.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/alexstore/Inventory.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/alexstore/Part.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/alexstore/Part.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/alexstore/partStore.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/alexstore/partStore.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -174,6 +167,10 @@
         <breakpoint enabled="true" type="java-exception">
           <properties class="java.util.IllegalFormatConversionException" package="java.util" />
           <option name="timeStamp" value="50" />
+        </breakpoint>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="java.lang.StringIndexOutOfBoundsException" package="java.lang" />
+          <option name="timeStamp" value="62" />
         </breakpoint>
         <line-breakpoint enabled="true" type="kotlin-line">
           <url>file://$PROJECT_DIR$/src/main/kotlin/bookMain.kt</url>

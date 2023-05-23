@@ -42,15 +42,29 @@ open class Inventory(fileName : String) {
     val colNine = columnLength[8].toInt()
     val colTen = columnLength[9].toInt()
 
+    fun indexString() : String {
+        var retString = ""
+        retString += toHeaderString()
+        for ((index, i) in fullInventoryList.withIndex() ) {
+            retString += "${index + 1}. ${i.toTableString()}"
+        }
+        return retString
+    }
 
     fun toTableString() : String {
-        var finalString = ""
-        finalString += "${header[0].toString().replace("Part","Alexs").padEnd(colOne)}${header[1].toString().padEnd(colTwo)}${header[2].toString().padEnd(colThree)}${header[3].toString().padEnd(colFour)}${header[4].toString().padEnd(colFive)}${header[5].toString().padEnd(colSix)}${header[6].toString().padEnd(colSeven)}${header[7].toString().padEnd(colEight)}${header[8].toString().padEnd(colNine)}${header[9].toString().padEnd(colTen)}\n"
-        finalString += "${"-".repeat(colOne - 1)} ${"-".repeat(colTwo - 1)} ${"-".repeat(colThree - 1)} ${"-".repeat(colFour - 1)} ${"-".repeat(colFive - 1)} ${"-".repeat(colSix - 1)} ${"-".repeat(colSeven - 1)} ${"-".repeat(colEight - 1)} ${"-".repeat(colNine - 1)} ${"-".repeat(colTen - 1)}\n"
+        var reString = ""
         for (i in fullInventoryList) {
-            finalString += i.toTableString()
+            reString += i.toTableString()
         }
-    return finalString
+    return reString
+    }
+
+    fun toHeaderString() : String {
+        var retString = ""
+        retString += "Parts Inventory".padStart(75) + "\n"
+        retString += "${header[0].toString().replace("Part","Alexs").padEnd(colOne)}${header[1].toString().padEnd(colTwo)}${header[2].toString().padEnd(colThree)}${header[3].toString().padEnd(colFour)}${header[4].toString().padEnd(colFive)}${header[5].toString().padEnd(colSix)}${header[6].toString().padEnd(colSeven)}${header[7].toString().padEnd(colEight)}${header[8].toString().padEnd(colNine)}${header[9].toString().padEnd(colTen)}\n"
+        retString += "${"-".repeat(colOne - 1)} ${"-".repeat(colTwo - 1)} ${"-".repeat(colThree - 1)} ${"-".repeat(colFour - 1)} ${"-".repeat(colFive - 1)} ${"-".repeat(colSix - 1)} ${"-".repeat(colSeven - 1)} ${"-".repeat(colEight - 1)} ${"-".repeat(colNine - 1)} ${"-".repeat(colTen - 1)}\n"
+        return retString
     }
 
     fun toTableHeader() : String {
@@ -97,10 +111,65 @@ open class Inventory(fileName : String) {
         writeFile.close()
     }
 
-    fun detailedReport(choice : Int){
-        println("-".repeat(50))
-        println(fullInventoryList[choice].toDetailedReport())
-        println("-".repeat(50))
+    fun detailedReport(choice : Int) : String {
+        var retString = ""
+
+        retString += "-".repeat(50) + "\n"
+        retString += fullInventoryList[choice].toDetailedReport() + "\n"
+        retString += "-".repeat(50)
+        return retString
+    }
+
+    fun addPart(category: String, name : String , retail : Double, cost : Double, inStock: Int, sold : Int, description : String, xxx : String, yyy: String, zzz:String) {
+        if (category == "COMPUTER") {
+            fullInventoryList.add(
+                Computer(
+                    category,
+                    name,
+                    retail,
+                    cost,
+                    inStock,
+                    sold,
+                    description,
+                    xxx.toInt(),
+                    yyy.toInt(),
+                    zzz
+                )
+            )
+        }
+        else if(category == "PRINTER")
+        {
+            fullInventoryList.add(
+                Printer(
+                    category,
+                    name,
+                    retail,
+                    cost,
+                    inStock,
+                    sold,
+                    description,
+                    xxx.toBoolean(),
+                    yyy.toInt(),
+                    zzz.toBoolean()
+                )
+            )
+        }
+        else if (category == "TABLET") {
+            fullInventoryList.add(
+                Tablet(
+                    category,
+                    name,
+                    retail,
+                    cost,
+                    inStock,
+                    sold,
+                    description,
+                    xxx,
+                    yyy.toInt(),
+                    zzz.toBoolean()
+                )
+            )
+        }
     }
 }
 

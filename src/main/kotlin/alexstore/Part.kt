@@ -1,5 +1,4 @@
 package alexstore
-import jdk.jfr.Category
 import java.io.File
 
 /************************************************************
@@ -35,7 +34,14 @@ open class Part(var category: String,  var name : String , var retail: Double, v
     open fun toTableString() : String {
         var formattedRetail = "$" + "%.2f".format(retail)
         var formattedCost = "$" + "%.2f".format(cost)
-        return "${category.padEnd(colOne)}${name.padEnd(colTwo)}${formattedRetail.padEnd(colThree)}${formattedCost.padEnd(colFour)}${inStock.toString().padEnd(colFive)}${sold.toString().padEnd(colSix)}${description.padEnd(colSeven)}"
+        var shortDescr = ""
+        if (description.length >= 38) {
+        shortDescr = description.slice(0..37)
+        }
+        else{
+        shortDescr = description
+        }
+        return "${category.padEnd(colOne)}${name.padEnd(colTwo)}${formattedRetail.padEnd(colThree)}${formattedCost.padEnd(colFour)}${inStock.toString().padEnd(colFive)}${sold.toString().padEnd(colSix)}${shortDescr.padEnd(colSeven)}"
 
     }
 
@@ -50,5 +56,6 @@ open class Part(var category: String,  var name : String , var retail: Double, v
             |${"Detailed Description:".padEnd(22)}$description
             """.trimMargin()
     }
+
 
 }
