@@ -3,14 +3,7 @@
   <component name="CsvFileAttributes">
     <option name="attributeMap">
       <map>
-        <entry key="/copyparts_database.tsv">
-          <value>
-            <Attribute>
-              <option name="separator" value="&#9;" />
-            </Attribute>
-          </value>
-        </entry>
-        <entry key="/src/main/kotlin/partsinventory/parts_database.db">
+        <entry key="/src/main/kotlin/alexstore/parts_database.db">
           <value>
             <Attribute>
               <option name="separator" value="&#9;" />

@@ -1,14 +1,5 @@
 package alexstore
-import alexstore.Part
-import alexstore.Inventory
 
-/************************************************************
- *  Name:         Alex Cruz
- *  Date:         5/20/23
- *  Assignment:
- *  Class Number: CIS 282
- *  Description:
- ************************************************************/
 open class Computer(category: String, name : String, retail: Double, cost : Double, inStock: Int, sold: Int, description: String, var ram : Int, var hddCapacity: Int, var cpuSpeed : String) : Part(category, name, retail, cost, inStock, sold, description) {
 
 
@@ -18,7 +9,7 @@ open class Computer(category: String, name : String, retail: Double, cost : Doub
     }
 
     override fun toTab() : String {
-            return super.toTab() + "\t${ram}\t${hddCapacity}\t${cpuSpeed}\n"
+            return super.toTab() + "\t${ram}\t${hddCapacity}\t${cpuSpeed}"
     }
 
     override fun toTableString(): String {

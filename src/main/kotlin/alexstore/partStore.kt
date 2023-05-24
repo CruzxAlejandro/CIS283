@@ -1,6 +1,4 @@
 package alexstore
-import alexstore.Inventory
-import java.io.File
 
 /************************************************************
  *  Name:         Alex Cruz
@@ -60,13 +58,8 @@ class Menu(var menuItems: Array<String>, var prompt : String) {
         return promptForInt(prompt, 1..menuItems.size)
     }
 }
-/*
-Ask Dave about how I have my Add part setup
-Build the rest of Add part.
- */
 
 fun main() {
-
     val storeInventory = Inventory(fileName)
     val menu = Menu(arrayOf(
             "List All Parts",
@@ -85,17 +78,39 @@ fun main() {
         when(choice) {
             1 -> listAllParts(storeInventory)
             2 -> showAllCategory(storeInventory)
+            3 -> sellAPart(storeInventory)
+            4 -> increaseInv(storeInventory)
+            5 -> updatePart(storeInventory)
             6 -> addPartInventory(storeInventory)
+            7 -> removePartInventory(storeInventory)
             8 -> showDetailedInfo(storeInventory)
+            9 -> totalsReport(storeInventory)
+            10 -> saveDisk(storeInventory)
         }
     }while (choice != menu.quit)
 }
-
 fun listAllParts(storeInventory: Inventory){
     println()
     print(storeInventory.toHeaderString())
     print( storeInventory.toTableString())
     println()
+}
+fun updatePart(storeInventory: Inventory) {
+    println()
+    println(storeInventory.indexString())
+    println()
+    print("What part would you like to update?: ")
+    val choice = readln().toInt() - 1
+    storeInventory.updatePart(choice)
+}
+fun removePartInventory(storeInventory: Inventory) {
+    println()
+    println(storeInventory.indexString())
+    println()
+    print("What part would you like to remove from inventory?: ")
+    val choice = readln().toInt() - 1
+    storeInventory.removePart(choice)
+
 }
 fun showAllCategory(storeInventory: Inventory){
     print("Select a category to filter part inventory: ")
@@ -112,6 +127,9 @@ fun showDetailedInfo(storeInventory: Inventory) {
     val choice = readln().toInt() - 1
     println(storeInventory.detailedReport(choice))
     println()
+}
+fun totalsReport(storeInventory: Inventory) {
+    println(storeInventory.addUpTotals())
 }
 fun addPartInventory(storeInventory: Inventory) {
     print("What category of part would you like to add (COMPUTER, PRINTER, TABLET): ")
@@ -196,26 +214,29 @@ fun addPartInventory(storeInventory: Inventory) {
     }
 
 }
-
-
-/*
-Formatted Code Correctly
-Menu with 10 options (includes quit)
-Parts Class with 7 properties
-Computer Class with 3 properties - child of Parts
-Printer Class with 3 properties - child of Parts
-Tablet Class with 3 properties - child of Parts
-All files share the same package name
-Inventory Class
-Reads from TSV file and creates correct part objects
-Writes all parts and header back to the same TSV file.
-List all parts
-toString AND toTab in all classes
-Sell a part changes quantities sold/inventory correctly
-Add a new part
-Remove a part
-Show detail info for a part
-Show total inventory with 4 separate totals (Cost, Retail Price, Qty Sold, Profit)
-"super" method is used appropriately to maximize code reuse.
-Update a Part
- */
+fun sellAPart(storeInventory: Inventory) {
+    println()
+    println(storeInventory.indexString())
+    println()
+    print("Select the part you would like to purchase: ")
+    val choice = readln().toInt() - 1
+    storeInventory.sellPart(choice)
+    println()
+}
+fun increaseInv(storeInventory: Inventory) {
+    println()
+    println(storeInventory.indexString())
+    println()
+    print("Select the part that you would like to increase the inventory: ")
+    val choice = readln().toInt() - 1
+    print("How much are you increasing by?: ")
+    val increase = readln().toInt()
+    println()
+    storeInventory.increasePartInv(choice,increase)
+}
+fun saveDisk(storeInventory: Inventory) {
+    print(storeInventory.toHeaderString())
+    println(storeInventory.toTableString())
+    storeInventory.saveToDisk()
+    println("FILE SAVING....")
+}

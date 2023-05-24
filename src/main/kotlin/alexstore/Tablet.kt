@@ -1,12 +1,5 @@
 package alexstore
-import alexstore.Part
-/************************************************************
- *  Name:         Alex Cruz
- *  Date:         5/20/23
- *  Assignment:
- *  Class Number: CIS 282
- *  Description:
- ************************************************************/
+
 open class Tablet(category: String, name : String, retail: Double, cost : Double, inStock: Int, sold: Int, description: String, var screenSize : String, var ramMB: Int, var slotSD : Boolean) : Part(category, name, retail, cost, inStock, sold, description) {
 
     override fun toString():String {
@@ -14,7 +7,7 @@ open class Tablet(category: String, name : String, retail: Double, cost : Double
     }
 
     override fun toTab() : String {
-        return super.toTab() + "\t${screenSize}\t${ramMB}\t${slotSD}\n"
+        return super.toTab() + "\t${screenSize}\t${ramMB}\t${slotSD}"
     }
 
     override fun toTableString(): String {

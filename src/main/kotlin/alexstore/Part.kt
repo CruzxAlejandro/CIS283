@@ -45,6 +45,17 @@ open class Part(var category: String,  var name : String , var retail: Double, v
 
     }
 
+    open fun totalsReportString() : String {
+        val profit = retail - cost
+        val grandTotal = profit * sold
+        var formattedRetail = "$" + "%.2f".format(retail)
+        var formattedCost = "$" + "%.2f".format(cost)
+        var formattedProfit = "$" + "%.2f".format(profit)
+        var formattedTotal = "$" + "%.2f".format(grandTotal)
+        return "${category.padEnd(colOne)}${name.padEnd(colTwo)}${formattedRetail.padEnd(colThree)}${formattedCost.padEnd(colFour)}${inStock.toString().padEnd(colFive)}${sold.toString().padEnd(colSix)}${formattedProfit.padStart(colOne)}${formattedTotal.padStart(colOne)}\n"
+
+    }
+
     open fun toDetailedReport() : String {
         return """
             |${"Part Category:".padEnd(22)}$category
