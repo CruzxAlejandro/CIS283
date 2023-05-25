@@ -37,9 +37,9 @@ fun promptForString(message: String) : String {
         if (!firstTime) {
             println("""|${" "}
                                |ERROR
-                               |${"-".repeat(50)}
-                               |Please enter a valid file name.
-                               |${"-".repeat(50)}
+                               |${"-".repeat(80)}
+                               |Please enter a valid option. Null inputs are not allowed.
+                               |${"-".repeat(80)}
                                |${" "}
                                 """.trimMargin())
         }
@@ -132,9 +132,9 @@ fun totalsReport(storeInventory: Inventory) {
     println(storeInventory.addUpTotals())
 }
 fun addPartInventory(storeInventory: Inventory) {
-    print("What category of part would you like to add (COMPUTER, PRINTER, TABLET): ")
-    var choice = readln().uppercase()
-    if (choice == "COMPUTER") {
+//    print("What category of part would you like to add (COMPUTER, PRINTER, TABLET): ")
+    var choice = promptForString("What category of part would you like to add (COMPUTER, PRINTER, TABLET): ")
+    if (choice.uppercase() == "COMPUTER") {
         var category = choice
         print("Enter name of the part: ")
         var name = readln()
@@ -159,7 +159,7 @@ fun addPartInventory(storeInventory: Inventory) {
         println(storeInventory.toHeaderString())
         println(storeInventory.toTableString())
     }
-    else if(choice == "PRINTER"){
+    else if(choice.uppercase() == "PRINTER"){
         var category = choice
         print("Enter name of the part: ")
         var name = readln()
@@ -185,7 +185,7 @@ fun addPartInventory(storeInventory: Inventory) {
         println(storeInventory.toHeaderString())
         println(storeInventory.toTableString())
     }
-    else if(choice == "TABLET") {
+    else if(choice.uppercase() == "TABLET") {
         var category = choice
         print("Enter name of the part: ")
         var name = readln()
@@ -212,6 +212,11 @@ fun addPartInventory(storeInventory: Inventory) {
         println(storeInventory.toTableString())
         println()
     }
+    else{
+        println()
+        println("!!!ERROR: '$choice' is not a valid category.!!!")
+        println()
+    }
 
 }
 fun sellAPart(storeInventory: Inventory) {
@@ -231,6 +236,9 @@ fun increaseInv(storeInventory: Inventory) {
     val choice = readln().toInt() - 1
     print("How much are you increasing by?: ")
     val increase = readln().toInt()
+    if (increase <= 0) {
+        println("\n!!!ERROR: You cannot increase by '${increase}'.!!!\n")
+    }
     println()
     storeInventory.increasePartInv(choice,increase)
 }

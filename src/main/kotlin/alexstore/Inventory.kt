@@ -4,8 +4,7 @@ import java.io.File
 open class Inventory(fileName : String) {
     var columnLength = mutableListOf<String>()
     var header = mutableListOf<String>()
-    var fullInventoryList = mutableListOf<Part>()
-//    var writeFile = File(fileName).printWriter()
+    private var fullInventoryList = mutableListOf<Part>()
 
     init {
         var lines = File(fileName).readLines()
@@ -164,7 +163,7 @@ open class Inventory(fileName : String) {
     fun toHeaderString() : String {
         var retString = ""
         retString += " ".repeat(75) + "Parts Inventory\n"
-        retString += "${header[0].toString().replace("Part","Alexs").padEnd(colOne)}${header[1].toString().padEnd(colTwo)}${header[2].toString().padEnd(colThree)}${header[3].toString().padEnd(colFour)}${header[4].toString().padEnd(colFive)}${header[5].toString().padEnd(colSix)}${header[6].toString().padEnd(colSeven)}${header[7].toString().padEnd(colEight)}${header[8].toString().padEnd(colNine)}${header[9].toString().padEnd(colTen)}\n"
+        retString += "${header[0].replace("Part","Alexs").padEnd(colOne)}${header[1].padEnd(colTwo)}${header[2].padEnd(colThree)}${header[3].padEnd(colFour)}${header[4].padEnd(colFive)}${header[5].padEnd(colSix)}${header[6].padEnd(colSeven)}${header[7].padEnd(colEight)}${header[8].padEnd(colNine)}${header[9].padEnd(colTen)}\n"
         retString += "${"-".repeat(colOne - 1)} ${"-".repeat(colTwo - 1)} ${"-".repeat(colThree - 1)} ${"-".repeat(colFour - 1)} ${"-".repeat(colFive - 1)} ${"-".repeat(colSix - 1)} ${"-".repeat(colSeven - 1)} ${"-".repeat(colEight - 1)} ${"-".repeat(colNine - 1)} ${"-".repeat(colTen - 1)}\n"
         return retString
     }
@@ -177,25 +176,25 @@ open class Inventory(fileName : String) {
         header[6] = header[6].replace(whiteSpace, "_")
 
         var retString = ""
-        var num = 0
+        var num = 1
         for (i in columnLength) {
-                if (num < columnLength.size - 1) {
+                if (num < columnLength.size) {
                     retString += "${i}\t"
                     num++
                 }
-                if (num == columnLength.size - 1) {
+                else if (num == columnLength.size) {
                     retString += "${i}\n"
                     num++
                 }
 
         }
-        num = 0
+        num = 1
         for (i in header) {
-                    if (num < header.size - 1) {
+                    if (num < header.size) {
                         retString += "${i}\t"
                         num++
                     }
-                    if (num == header.size - 1) {
+                    else if (num == header.size) {
                         retString += "${i}\n"
                         num++
                     }
@@ -205,9 +204,17 @@ open class Inventory(fileName : String) {
     }
     fun saveToDisk() {
         var writeFile = File(fileName).printWriter()
+        var counter = 1
         writeFile.print(toTableHeader())
         for (i in fullInventoryList) {
+            if (counter < fullInventoryList.size) {
             writeFile.println(i.toTab())
+                counter++
+            }
+            else{
+            writeFile.print(i.toTab())
+                counter++
+            }
         }
         writeFile.close()
     }
