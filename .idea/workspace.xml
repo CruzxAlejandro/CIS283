@@ -5,10 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d157e6a7-8598-48a3-9012-cd8ca4fedc48" name="Changes" comment="Push to master branch.">
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/wordsearch/wordSearch.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/csv-editor.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/csv-editor.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/alexstore/Inventory.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/alexstore/Inventory.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/alexstore/partStore.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/alexstore/partStore.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/alexstore/parts_database.tsv" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/alexstore/parts_database.tsv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/alexstore/parts_database.db" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/alexstore/testingFile.tsv" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -18,8 +19,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Kotlin File" />
         <option value="Kotlin Class" />
+        <option value="Kotlin File" />
       </list>
     </option>
   </component>
