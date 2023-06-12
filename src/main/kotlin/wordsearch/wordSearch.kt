@@ -20,7 +20,6 @@ class Puzzle(var row : Int, var col:Int , var file : String) {
     var wordArray = mutableListOf<String>()
     var charArray = mutableListOf<Char>()
     var directionArray = arrayOf("N","E","S","W","NE","SE","NW","SW")
-//    var directionArray = arrayOf("N","E","S","W")
     init {
         var whiteSpace = """\s""".toRegex()
         for (i in wordFile) {
