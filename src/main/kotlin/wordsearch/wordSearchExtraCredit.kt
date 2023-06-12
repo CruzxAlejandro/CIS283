@@ -4,27 +4,29 @@ import java.io.File
 /************************************************************
  *  Name:         Alex Cruz
  *  Date:         6/7/23
- *  Assignment:   Word search final
+ *  Assignment:   Word search Extra Credit
  *  Class Number: CIS 283
  *  Description:
  ************************************************************/
 
-/*
-Directions:          Horizontal, vertical, diagonal-right, diagonal-left (8 total)
-                     left,right,up,down,northeast,southeast,northwest,southwest
-*/
 
 class Puzzle(var row : Int, var col:Int , var file : String) {
     var puzzleBoard = Array(row){Array(col){"."}}
     var wordFile = File(file).readLines()
     var wordArray = mutableListOf<String>()
-    var charArray = mutableListOf<Char>()
+    var charArray = mutableListOf<String>()
     var directionArray = arrayOf("N","E","S","W","NE","SE","NW","SW")
     init {
         var whiteSpace = """\s""".toRegex()
         for (i in wordFile) {
             wordArray.add(i.replace(whiteSpace,"").uppercase())
+            for (j in i) {
+                if (j != ' ') {
+                    charArray.add(j.uppercase())
+                }
+            }
         }
+
     }
     fun testPlace(word:String, randRow: Int, randCol: Int, direction: String) : Boolean {
         var wordPlaced = true
@@ -137,8 +139,8 @@ class Puzzle(var row : Int, var col:Int , var file : String) {
                     }
                 }
             }
+            }
         }
-    }
     fun buildPuzzle() {
          wordArray.sortByDescending { it.length }
         for (word in wordArray) {
@@ -146,11 +148,10 @@ class Puzzle(var row : Int, var col:Int , var file : String) {
             var randCol = randCol()
             var direction = randDirection()
             var flagOne = false
-            var flagTwo = false
-            while (!flagTwo) {
+            while (!flagOne) {
                 if (testPlace(word,randRow,randCol,direction)) {
                     placeWord(word,randRow,randCol,direction)
-                    flagTwo = true
+                    flagOne = true
                 }else{
                     direction = randDirection()
                     randCol = randCol()
@@ -159,83 +160,17 @@ class Puzzle(var row : Int, var col:Int , var file : String) {
             }
         }
     }
-    fun createPuzzleKey() : String {
-        buildPuzzle()
-        var retString = ""
-        var rowCounter = 0
-        var colCounter = 0
-        for (row in puzzleBoard.indices) {
-            for(col in puzzleBoard[row].indices) {
-                colCounter++
-                retString += puzzleBoard[row][col]
-                if (colCounter < puzzleBoard[row].size) {
-                    retString += " "
-                }
-            }
-            rowCounter++
-            if (rowCounter < puzzleBoard[row].size) {
-                retString += "\n"
-            }
-            colCounter = 0
-        }
-        return retString
-    }
-    fun createPuzzle() : String {
-
-        for (word in wordArray) {
-            for (letter in word) {
-                charArray.add(letter)
-            }
-        }
-        var retString = ""
+    fun createPuzzle(){
         buildPuzzle()
         /* Adds in the missing spots */
         for (row in puzzleBoard.indices){
             for (col in puzzleBoard.indices) {
                 if (puzzleBoard[row][col] == ".") {
-                    puzzleBoard[row][col] = charArray.random().toString()
+                    puzzleBoard[row][col] = charArray.random()
+
                 }
             }
         }
-
-        /*Prints out to main */
-        var colCounter = 0
-        var rowCounter = 0
-        for (row in puzzleBoard.indices) {
-            for(col in puzzleBoard[row].indices) {
-                colCounter++
-                retString += puzzleBoard[row][col]
-                if (colCounter < puzzleBoard[row].size) {
-                    retString += " "
-                }
-            }
-            rowCounter++
-            if (rowCounter < puzzleBoard[row].size) {
-                retString += "\n"
-            }
-            colCounter = 0
-        }
-        return retString
-    }
-    fun displayWords() : String {
-        var retString = ""
-        wordArray.sort()
-        var counter = 0
-
-        retString += "Find the following 45 words:\n\n"
-
-        for (words in wordArray) {
-            if (counter == 0) {
-            retString += " ".repeat(15)
-            }
-            retString += words.padEnd(20)
-            counter++
-            if (counter % 3 == 0) {
-                retString += "\n"
-                counter = 0
-            }
-        }
-        return retString
     }
     fun randRow() : Int {
         return (0..(row - 1)).random()
@@ -244,32 +179,30 @@ class Puzzle(var row : Int, var col:Int , var file : String) {
         return (0..(col - 1)).random()
     }
     fun randDirection() : String {
-        return directionArray[(directionArray.indices.random())]
+        return directionArray[(0..7).random()]
     }
 }
 
  fun main() {
-     val puzzle = Puzzle(45,45,"src/main/kotlin/wordsearch/words.txt")
-     println(puzzle.createPuzzleKey())
-     println()
-     println(puzzle.displayWords())
+     val start = System.currentTimeMillis()
+     for (i in 1..10) {
+         var puzzle = Puzzle(30,30,"src/main/kotlin/wordsearch/words.txt")
+         puzzle.createPuzzle()
+     }
+     var totalTime = System.currentTimeMillis() - start
+     println("Total Time to create 10 puzzles: $totalTime milli-seconds")
+     println("Average Time to create 1 puzzles: ${totalTime/10} milli-seconds")
 
-     var puzzleKeyFile = File("src/main/kotlin/wordsearch/puzzleKey.txt").printWriter()
-     puzzleKeyFile.println(puzzle.createPuzzleKey() + "\n")
-     puzzleKeyFile.println(puzzle.displayWords())
-     puzzleKeyFile.close()
+     /*
 
-     println(puzzle.createPuzzle())
-     println()
-     println(puzzle.displayWords())
+                *** What I did for a faster run time ***
 
-     var puzzleFile = File("src/main/kotlin/wordsearch/puzzle.txt").printWriter()
-     puzzleFile.println(puzzle.createPuzzle() + "\n")
-     puzzleFile.println(puzzle.displayWords())
-     puzzleFile.close()
+                * Remove all aspects of printing/returning a string. This included adding spaces in between puzzle pieces.
+                * Removed unused functions
+                * Created my character array as an inner for loop inside the word array instead of doing that step later.
+                * Adjusted my randDirection function. Instead of returning a random number from the indices of the array, I hard coded a range of 0-7. This saved me almost 10-20 milliseconds in total time.
 
-
-
+    */
  }
 
 
