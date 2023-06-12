@@ -6,6 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="d157e6a7-8598-48a3-9012-cd8ca4fedc48" name="Changes" comment="Push to master branch.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/wordsearch/puzzle.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/wordsearch/puzzle.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/wordsearch/puzzleKey.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/wordsearch/puzzleKey.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/wordsearch/wordSearch.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/wordsearch/wordSearch.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />

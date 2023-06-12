@@ -18,12 +18,20 @@ class Puzzle(var row : Int, var col:Int , var file : String) {
     var puzzleBoard = Array(row){Array(col){"."}}
     var wordFile = File(file).readLines()
     var wordArray = mutableListOf<String>()
-    var charArray = mutableListOf<Char>()
+    var charArray = mutableListOf<String>()
     var directionArray = arrayOf("N","E","S","W","NE","SE","NW","SW")
     init {
         var whiteSpace = """\s""".toRegex()
+//        for (i in wordFile) {
+//            wordArray.add(i.replace(whiteSpace,"").uppercase())
+//        }
         for (i in wordFile) {
             wordArray.add(i.replace(whiteSpace,"").uppercase())
+            for (j in i) {
+                if (j != ' ') {
+                    charArray.add(j.uppercase())
+                }
+            }
         }
     }
     fun testPlace(word:String, randRow: Int, randCol: Int, direction: String) : Boolean {
@@ -182,18 +190,13 @@ class Puzzle(var row : Int, var col:Int , var file : String) {
     }
     fun createPuzzle() : String {
 
-        for (word in wordArray) {
-            for (letter in word) {
-                charArray.add(letter)
-            }
-        }
         var retString = ""
         buildPuzzle()
         /* Adds in the missing spots */
         for (row in puzzleBoard.indices){
             for (col in puzzleBoard.indices) {
                 if (puzzleBoard[row][col] == ".") {
-                    puzzleBoard[row][col] = charArray.random().toString()
+                    puzzleBoard[row][col] = charArray.random()
                 }
             }
         }
@@ -244,7 +247,8 @@ class Puzzle(var row : Int, var col:Int , var file : String) {
         return (0..(col - 1)).random()
     }
     fun randDirection() : String {
-        return directionArray[(directionArray.indices.random())]
+//        return directionArray[(directionArray.indices.random())]
+        return directionArray[(0..7).random()]
     }
 }
 
