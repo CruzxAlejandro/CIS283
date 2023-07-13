@@ -1,4 +1,4 @@
-package removeDuplicates
+package leetcode
 
 
 /************************************************************
@@ -26,21 +26,6 @@ fun main() {
 
 }
 
-//class Solution {
-//    fun removeDuplicates(nums: IntArray): Int {
-//        var k = 0
-//        var checkInts = mutableListOf<Int>()
-//        for(i in nums) {
-//            if (!checkInts.contains(i)) {
-//                checkInts.add(i)
-//                nums[k] = i
-//                k++
-//
-//            }
-//        }
-//        return k
-//    }
-//}
 
 class Solution {
     fun searchInsert(nums: IntArray, target: Int): Int {
